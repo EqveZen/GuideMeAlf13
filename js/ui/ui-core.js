@@ -19,6 +19,18 @@ const UICore = {
             this.elements[id] = document.getElementById(id);
         });
     },
+
+updateAudioProgress(percent) {
+    if (this.elements.audioStatus) {
+        if (percent === 100) {
+            this.elements.audioStatus.textContent = '✅ готова';
+            this.elements.audioStatus.style.color = '#4CAF50';
+        } else {
+            this.elements.audioStatus.textContent = `🎵 ${percent}%`;
+            this.elements.audioStatus.style.color = '#FFC107';
+        }
+    }
+},
     
     updateStatus(text) {
         if (this.elements.status) {
