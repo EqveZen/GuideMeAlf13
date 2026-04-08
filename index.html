@@ -5,10 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>GuideMe — видеть мир ушами</title>
     
-    <!-- CSS -->
     <link rel="stylesheet" href="css/style.css">
     
-    <!-- TensorFlow.js и модель COCO-SSD -->
+    <!-- TensorFlow и COCO-SSD -->
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@3.18.0/dist/tf.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd@2.2.2/dist/coco-ssd.min.js"></script>
 </head>
@@ -25,41 +24,40 @@
                 <canvas id="overlay"></canvas>
             </div>
             
-            <div class="controls">
-                <button id="startBtn" class="primary">▶ Запустить камеру</button>
-                <button id="stopBtn" disabled>⏹ Остановить</button>
-                <button id="describeBtn" disabled>🔊 Опиши сцену</button>
-                <button id="calibrateBtn" disabled>📏 Калибровка</button>
-                <button id="settingsBtn">⚙️ Настройки</button>
-                <button id="testVoiceBtn">🔊 Тест голоса</button>
-            </div>
+<div class="controls">
+    <button id="cameraToggleBtn" class="primary">▶ Запустить камеру</button>
+    <button id="settingsBtn">⚙️ Настройки</button>
+</div>
+
+<div id="settingsPanel" class="settings-panel hidden">
+    <h3>Настройки</h3>
+
+    <div class="settings-section">
+        <h4>📱 Общие</h4>
+        <div class="setting-item">
+            <label for="volume">Громкость</label>
+            <input type="range" id="volume" min="0" max="1" step="0.1" value="1">
+        </div>
+    </div>
+
+    <div class="settings-section">
+        <h4>⚙️ Системные</h4>
+        <div class="setting-item">
+            <button id="calibrateBtn" class="secondary">Калибровка</button>
+        </div>
+    </div>
+
+    <div class="settings-section">
+        <h4>🛠️ Сервис</h4>
+        <div class="setting-item">
+            <button id="testVoiceBtn" class="secondary">Тест голоса</button>
+        </div>
+    </div>
+
+    <button id="closeSettingsBtn">Готово</button>
+</div>
             
-            <!-- Панель настроек -->
-            <div id="settingsPanel" class="settings-panel hidden">
-                <h3>Настройки</h3>
-                <div class="setting-item">
-                    <label>🔊 Громкость</label>
-                    <input type="range" id="volume" min="0" max="1" step="0.1" value="1">
-                </div>
-                <div class="setting-item">
-                    <label>⚡ Частота подсказок (сек)</label>
-                    <input type="range" id="frequency" min="3" max="10" step="1" value="5">
-                </div>
-                <div class="setting-item">
-                    <label>🎯 Минимальная уверенность</label>
-                    <input type="range" id="confidence" min="0.3" max="0.9" step="0.1" value="0.4">
-                </div>
-                <div class="setting-item">
-                    <label>⚠️ Порог опасности (метры)</label>
-                    <input type="range" id="dangerThreshold" min="0.5" max="3" step="0.1" value="1.5">
-                </div>
-                <button id="closeSettingsBtn">Готово</button>
-            </div>
-            
-            <div class="status-panel">
-                <div class="status-title">Текущая ситуация</div>
-                <div id="status">Ожидание запуска камеры...</div>
-            </div>
+
             
             <div class="detection-log">
                 <div class="log-title">Журнал событий</div>
@@ -71,7 +69,10 @@
                     <span class="info-label">Модель:</span>
                     <span id="modelStatus">⏳ загрузка...</span>
                 </div>
-
+                <div class="info-item">
+                    <span class="info-label">Аудио:</span>
+                    <span id="audioStatus">⏳ загрузка</span>
+                </div>
                 <div class="info-item">
                     <span class="info-label">Калибровка:</span>
                     <span id="calibStatus">не выполнена</span>
@@ -81,7 +82,7 @@
         
         <footer>
             <div class="footer">
-                ⚠️ Альфа-версия 1.3 — стабильная версия с безопасностью и расстоянием
+                ⚠️ Альфа-версия 1.8— стабильная версия.
                 <br>
                 <span class="small">Технологии на службе добра 🌟</span>
             </div>
@@ -92,7 +93,8 @@
     <script src="js/core/constants.js"></script>
     <script src="js/core/translations.js"></script>
     <script src="js/core/utils.js"></script>
-    <script src="js/core/speech.js"></script>
+    <script src="js/core/speechgot.js"></script>
+    <script src="js/core/voice-command.js"></script>
     
     <!-- Vision -->
     <script src="js/vision/camera.js"></script>
@@ -102,14 +104,18 @@
     <!-- Features -->
     <script src="js/features/calibration.js"></script>
     <script src="js/features/safety.js"></script>
+    <script src="js/features/navigation.js"></script>
     
     <!-- Utils -->
     <script src="js/utils/helpers.js"></script>
+	<!--<script src="js/utils/newversion.js"></script>
+
     
     <!-- UI -->
     <script src="js/ui/ui-core.js"></script>
     <script src="js/ui/ui-controls.js"></script>
     <script src="js/ui/ui-settings.js"></script>
+
     
     <!-- Main -->
     <script src="js/main.js"></script>
