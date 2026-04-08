@@ -3,46 +3,34 @@
     padding: 0;
     box-sizing: border-box;
 }
-
 body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+    font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
     background: #000;
     color: white;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
 }
-
 .container {
     flex: 1;
-    display: flex;
-    flex-direction: column;
     padding: 16px;
     max-width: 600px;
     margin: 0 auto;
     width: 100%;
 }
-
-/* Шапка */
 header {
     margin-bottom: 16px;
 }
-
 h1 {
     font-size: 28px;
-    margin-bottom: 4px;
     text-align: center;
     color: #4CAF50;
-    letter-spacing: -0.5px;
 }
-
 .subtitle {
     text-align: center;
     color: #aaa;
     font-size: 14px;
 }
-
-/* Контейнер видео */
 .video-container {
     position: relative;
     width: 100%;
@@ -52,9 +40,7 @@ h1 {
     overflow: hidden;
     margin-bottom: 20px;
     border: 2px solid #333;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.5);
 }
-
 #video, #overlay {
     position: absolute;
     top: 0;
@@ -63,20 +49,16 @@ h1 {
     height: 100%;
     object-fit: cover;
 }
-
 #overlay {
     pointer-events: none;
     z-index: 10;
 }
-
-/* Кнопки управления — вертикально и на всю ширину */
 .controls {
     display: flex;
     flex-direction: column;
     gap: 16px;
     margin-bottom: 20px;
 }
-
 button {
     width: 100%;
     padding: 20px;
@@ -87,81 +69,58 @@ button {
     background: #2C2C2E;
     color: white;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: 0.2s;
     border: 1px solid #3A3A3C;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
 }
-
-button:hover {
-    background: #3A3A3C;
-    transform: translateY(-1px);
-}
-
-button:active {
-    transform: translateY(1px);
-}
-
 button.primary {
     background: #4CAF50;
-    color: white;
     border: none;
 }
-
-button.primary:hover {
-    background: #45a049;
-}
-
-button:disabled {
-    opacity: 0.5;
-    pointer-events: none;
-}
-
-/* Панель настроек */
+button.primary:hover { background: #45a049; }
+button:active { transform: translateY(1px); }
 .settings-panel {
     background: #1C1C1E;
     border-radius: 24px;
     padding: 20px;
     margin-bottom: 16px;
     border: 1px solid #2C2C2E;
+    display: none;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
 }
-
+.settings-panel:not(.hidden) {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
 .settings-panel.hidden {
     display: none;
+    opacity: 0;
+    transform: translateY(30px);
 }
-
 .settings-panel h3 {
-    margin-bottom: 20px;
-    color: #4CAF50;
-    font-size: 20px;
     text-align: center;
+    color: #4CAF50;
+    margin-bottom: 20px;
 }
-
-/* Секции настроек */
 .settings-section {
     margin-bottom: 24px;
     border-bottom: 1px solid #2C2C2E;
     padding-bottom: 16px;
 }
-
 .settings-section h4 {
-    font-size: 16px;
     color: #4CAF50;
     margin-bottom: 12px;
-    margin-top: 0;
 }
-
-/* Элементы настроек */
 .setting-item {
     margin-bottom: 16px;
 }
-
 .setting-item label {
     display: block;
     color: #8E8E93;
     margin-bottom: 8px;
-    font-size: 14px;
 }
-
 .setting-item input[type="range"] {
     width: 100%;
     height: 6px;
@@ -169,7 +128,6 @@ button:disabled {
     border-radius: 3px;
     -webkit-appearance: none;
 }
-
 .setting-item input[type="range"]::-webkit-slider-thumb {
     -webkit-appearance: none;
     width: 22px;
@@ -178,27 +136,15 @@ button:disabled {
     border-radius: 50%;
     cursor: pointer;
 }
-
 .setting-item button {
-    width: 100%;
-    background: #2C2C2E;
-    border: 1px solid #4CAF50;
-    color: white;
-    margin-top: 0;
     padding: 14px;
     font-size: 16px;
+    background: #2C2C2E;
+    border: 1px solid #4CAF50;
 }
-
 .setting-item button:active {
     background: #4CAF50;
 }
-
-/* Блок статуса полностью скрыт (не удалён из HTML, но не виден) */
-.status-panel {
-    display: none;
-}
-
-/* Информационная панель (модель, аудио) — можно оставить или скрыть */
 .info-panel {
     display: flex;
     justify-content: space-between;
@@ -209,56 +155,20 @@ button:disabled {
     font-size: 13px;
     color: #8E8E93;
 }
-
 .info-item {
     display: flex;
     gap: 6px;
 }
-
-.info-label {
-    color: #666;
-}
-
-/* Футер */
 footer {
-    margin-top: auto;
     text-align: center;
     color: #555;
     font-size: 12px;
     padding: 16px 0 8px;
 }
-
-/* Закрыть настройки кнопка */
 #closeSettingsBtn {
     width: 100%;
-    margin-top: 8px;
     background: #4CAF50;
     border: none;
+    margin-top: 8px;
     padding: 14px;
-    font-size: 16px;
-}
-
-.settings-panel {
-    background: #1C1C1E;
-    border-radius: 24px;
-    padding: 20px;
-    margin-bottom: 16px;
-    border: 1px solid #2C2C2E;
-    
-    display: none;
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.3s ease, transform 0.3s ease;
-}
-
-.settings-panel:not(.hidden) {
-    display: block;
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.settings-panel.hidden {
-    display: none;
-    opacity: 0;
-    transform: translateY(30px);
 }
