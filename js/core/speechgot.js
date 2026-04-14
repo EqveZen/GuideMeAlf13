@@ -145,26 +145,13 @@ const Speech = {
         console.log('🔇 Аудио загружено, ожидание первого взаимодействия');
     },
     
-    // Вызывать эту функцию при первом действии пользователя (например, нажатие кнопки)
-    allowFirstSpeak() {
-        if (this.firstSpeakAllowed) return;
-        this.firstSpeakAllowed = true;
-        console.log('🎤 Первое аудио разрешено');
-        this.play('я_готова');
-    },
-    
     play(name) {
         if (!this.settings.enabled) return;
         if (!this.isLoaded) {
             setTimeout(() => this.play(name), 500);
             return;
         }
-        // Без разрешения не играем (кроме случаев, когда уже разрешено)
-        if (!this.firstSpeakAllowed && name !== 'я_готова') {
-            console.log('⏳ Первое взаимодействие ещё не было, отложено:', name);
-            setTimeout(() => this.play(name), 1000);
-            return;
-        }
+        
         
         const audio = this.audioCache[name];
         if (audio) {
@@ -178,11 +165,6 @@ const Speech = {
         if (!this.settings.enabled) return;
         if (!this.isLoaded) {
             setTimeout(() => this.speak(text, priority), 1000);
-            return;
-        }
-        // Если ещё не разрешён первый звук, пробуем разрешить (но обычно это должно произойти по кнопке)
-        if (!this.firstSpeakAllowed) {
-            console.log('Первое взаимодействие не разрешено, игнорируем speak:', text);
             return;
         }
         const parts = this.splitText(text);
