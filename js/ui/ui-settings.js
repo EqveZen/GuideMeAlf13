@@ -31,3 +31,4 @@ togglePanel() {
         }
     }
 }
+    window.UISettings = UISettings;
